@@ -143,7 +143,7 @@ public static Vector getProtectedVector(Vector vector){
         inputString += " " + Double.toString(v.getElement(i));
         } 
         try {
-            out.write(inputSize+inputString + " \r\n");
+            out.write(inputSize+inputString + "\n");
             out.flush();
         } catch (IOException e1) {
 	e1.printStackTrace();

@@ -5,6 +5,7 @@ import com.npu.teachclub.vectors.Vector;
 import static com.npu.teachclub.vectors.Vectors.createInstance;
 import java.io.*;
 import java.net.*;
+import java.util.Scanner;
 
 public class Client {
  
@@ -12,60 +13,49 @@ public class Client {
      String f1;
      String f2;
  
-     f1 = "E:/"+ args[0]+".txt";
-     f2 = "E:/"+ args[1]+".txt";
+//     f1 = args[0];
+//     f2 = args[1];
+    f1 = "D:/A1.txt";
+    f2 = "D:/A2.txt";
     
- 
+    
     Socket fromserver = null;
     fromserver = new Socket("localhost",4444);
-    
-//    if (args.length==0) {
-//      System.out.println("use: client hostname");
-//      System.exit(-1);
-//    }
-//
-//    System.out.println("Connecting to... "+args[0]);
 
-//    fromserver = new Socket(args[0],4444);
-    
     
     BufferedReader in  = new BufferedReader(new InputStreamReader(fromserver.getInputStream()));
     PrintWriter    out = new PrintWriter(fromserver.getOutputStream(),true);
-    BufferedReader inu = new BufferedReader(new InputStreamReader(System.in));
-
-    
-//    InputStream ints;
-    DataInputStream inB = new DataInputStream(new FileInputStream(f1));
-     
-      try {
-         for(int i= 0; i<sizeB; i++){
-           double f = inB.readDouble(); 
-           v.setElement(i,f);
-           System.out.println(f + " ");
-           }
-
-         } 
-        catch(IOException e) {
-        System.out.println("Some error occurred!");
-      }
-     
+      
+    ObjectOutputStream coos = new ObjectOutputStream(fromserver.getOutputStream());
     
     
-    
-    
-    String fuser,fserver;
-
-    while ((fuser = inu.readLine())!=null) {
-      out.println(fuser);
-      fserver = in.readLine();
-      System.out.println(fserver);
-      if (fuser.equalsIgnoreCase("close")) break;
-      if (fuser.equalsIgnoreCase("exit")) break;
-    }
-
+     FileReader fin = new FileReader(f1);
+     Scanner text = new Scanner(fin);
+        int countLine = 0;
+        String print  = "";
+        while (text.hasNext()) {
+          countLine++;  
+          print += text.nextLine()+ "\n";
+          if(countLine%2==0){
+//            out.write(print);
+           coos.writeObject(print);   
+            print  = ""; 
+           coos.flush();
+         
+           PrintWriter bw = new PrintWriter(new BufferedWriter(new FileWriter(f2)));
+           StreamTokenizer nums = new StreamTokenizer(in);         
+           String  inputString = new String();
+             while ( nums.nextToken() != StreamTokenizer.TT_EOF ) {
+            if ( nums.ttype == StreamTokenizer.TT_NUMBER ) {
+              inputString += " " + Double.toString(nums.nextToken());  }
+             bw.write(inputString + "\n"); 
+            }
+            if (nums.ttype == StreamTokenizer.TT_WORD) {nums.nextToken();}
+          
+          }
+        }
     out.close();
     in.close();
-    inu.close();
     fromserver.close();
   }
 }
