@@ -5,13 +5,16 @@ import com.netckreker.teachclub.vectors.streams.*;
 import com.netckreker.teachclub.vectors.Vector;
 import com.netckreker.teachclub.vectors.allvectors.ArrayVector;
 import java.awt.Cursor;
+import java.io.EOFException;
+import java.io.FileReader;
+import java.util.Scanner;
 
-public class TabloWeb {
+public class TabloWeb  {
     
     public Vector vector = new com.netckreker.teachclub.vectors.allvectors.ArrayVector();
     private boolean newed = false;
     private int cursor = 0;
-    
+       
     public TabloWeb(int size) {
         vector = new com.netckreker.teachclub.vectors.allvectors.ArrayVector(size);
     }

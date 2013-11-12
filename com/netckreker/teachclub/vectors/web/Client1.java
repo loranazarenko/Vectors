@@ -1,27 +1,30 @@
 package com.netckreker.teachclub.vectors.web;
 
 
+import com.netckreker.teachclub.vectors.streams.FillRunable;
+import com.netckreker.teachclub.vectors.streams.Tablo;
 import java.io.*;
 import java.net.*;
+import java.util.Random;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-public class Client1 {
-public static void main(String[] arg) throws EOFException{ 
+public class Client1   extends Thread{
+    
+ public static void main(String[] arg) throws EOFException{ 
      String f1;
      String f2;
-//    BufferedReader in = null;
-    f1 = "D:/A1.txt";
-    f2 = "D:/A2.txt";
-    
+     f1 = "D:/A1.txt";
+     f2 = "D:/A2.txt";
     try {
        System.out.println("server connecting....");
        Socket clientSocket = new Socket("127.0.0.1",9999);
        System.out.println("connection established....");
 
-       DataInputStream  in = new DataInputStream (clientSocket.getInputStream());  
-       DataOutputStream out = new DataOutputStream(clientSocket.getOutputStream());
-       FileReader fin = new FileReader(f1);
-       Scanner text = new Scanner(fin); 
+       BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream())); 
+       PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(clientSocket.getOutputStream())));
+       Scanner text  = new Scanner(new FileReader(f1)); 
         
        String result = "";
                  
@@ -31,12 +34,12 @@ public static void main(String[] arg) throws EOFException{
           countLine++;  
           print += text.nextLine();
           if(countLine%2==0){
-                 out.writeUTF(print);
+                 out.println(print);
                  out.flush();
                  print  = ""; 
     
                  String inputString; 
-                 inputString = in.readUTF();
+                 inputString = in.readLine();
                  result += inputString +"\n";
                  System.out.println("echo: " + result);
             }
@@ -45,11 +48,10 @@ public static void main(String[] arg) throws EOFException{
         FileWriter fw = new FileWriter(f2);
         fw.write(result);
          
-        in.close();
-        fw.close();
         out.close();
-//        coos.close();
-//        cois.close();
+        in.close();
+        text.close();
+        fw.close();
         clientSocket.close();
         }
         catch(Exception e)	{
