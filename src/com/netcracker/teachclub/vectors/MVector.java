@@ -6,6 +6,7 @@ import com.netcracker.teachclub.vectors.streams.FillRunable;
 import com.netcracker.teachclub.vectors.patterns.Observers;
 import com.netcracker.teachclub.vectors.allvectors.LinkedListVector;
 import com.netcracker.teachclub.vectors.allvectors.ArrayVector;
+import com.netcracker.teachclub.vectors.exceptions.IncompatibleVectorSizesException;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -15,7 +16,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class MVector {
-    public static void main(String[] args) throws IOException, ClassNotFoundException {
+    public static void main(String[] args) throws IOException, ClassNotFoundException, IncompatibleVectorSizesException {
         int sizeSize = 3;
         double[] arr = {16, 18, 99, 94, 22,45};
         
@@ -31,10 +32,11 @@ public class MVector {
         Vector l2 = new LinkedListVector();
         Vector l3 = new LinkedListVector();
         
-//        o1.fillElements(arr);
+        o1.fillElements(arr);
+        o2.fillElements(arr);
 //        o1.getElement(54);
         
-        Observers ob1 = new Observers();
+//        Observers ob1 = new Observers();
           
 //        o1.addObserver(ob1);
         
@@ -65,13 +67,13 @@ public class MVector {
 //           thrd.start();
 //           thr.start();
          
-           Tablo obj = new Tablo();
-           Runnable r = new ReadRunable(obj);
-           FillRunable fr = new FillRunable(obj);
-           Thread thrd = new Thread(fr);
-           Thread thr = new Thread(r);
-           thrd.start();
-           thr.start();
+//           Tablo obj = new Tablo();
+//           Runnable r = new ReadRunable(obj);
+//           FillRunable fr = new FillRunable(obj);
+//           Thread thrd = new Thread(fr);
+//           Thread thr = new Thread(r);
+//           thrd.start();
+//           thr.start();
          
 //        JVectorAdapter j1 = new JVectorAdapter();
 //        JVectorAdapter j2 = new JVectorAdapter();
@@ -120,10 +122,11 @@ public class MVector {
         //         BufferedOutputStream bos =  new BufferedOutputStream(new FileOutputStream("E:/A8.txt"));
         //         Vectors.outputVector(o1, bos);
         //         Vectors.outputVector(o1, bos);
-        //         FileInputStream fr = new FileInputStream("E:/A8.txt");  ///InputStreamReader(System.in));
-        //         Vectors.inputVector(fr);
-        //         Vectors.inputVector(fr);
-        //
+                 FileInputStream fr = new FileInputStream("D:/A1.txt");  ///InputStreamReader(System.in));
+//                 Vectors.inputVector(fr);
+//                 Vectors.inputVector(fr);
+                 System.out.println(Vectors.Sum(o1, o2));
+                 //
         //         for ( int i = 0; i<o1.getSize(); i++ ) {
         //         System.out.println("vvvv "+i+"="+o1.getElement(i));}
         //

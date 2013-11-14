@@ -8,8 +8,11 @@ import com.netcracker.teachclub.vectors.patterns.VectorFactory;
 import com.netcracker.teachclub.vectors.patterns.JVectorAdapter;
 import com.netcracker.teachclub.vectors.patterns.ProtectedVector;
 import java.io.*;
+import java.lang.reflect.*;
 import java.util.Arrays;
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Vectors {
 
@@ -27,6 +30,32 @@ public static Vector createInstance(){
       return vf.createVector();
  }    
 
+public static Vector createInstance(Class cl, int size) {
+   Object res = null;
+    try {
+    Class c = cl; 
+    Constructor[] constructors = c.getConstructors();
+    Class[] paramTypes = new Class[] {int.class }; 
+    Constructor aConstrct = c.getConstructor(paramTypes); 
+    res = aConstrct.newInstance(size);
+   
+   }    catch (InstantiationException ex) {
+            ex.printStackTrace();
+        } catch (IllegalAccessException ex) {
+          System.out.println("Метод недоступен");
+        } catch (IllegalArgumentException ex) {
+            return vf.createSizeVector(size);
+        } catch (InvocationTargetException ex) {
+            System.out.println("При вызове возникло исключение");
+        }
+          catch (NoSuchMethodException ex) {
+            System.out.println("Метод не найден");
+        }
+    
+      return (Vector) res;
+      
+ } 
+
 public static Vector getAdaptedJVector(java.util.Vector jVector){
       return new JVectorAdapter(jVector);
  }
@@ -36,6 +65,7 @@ public static Vector getProtectedVector(Vector vector){
 }
       
    public static Vector fillVector(int size) {
+       
         Vector array = createInstance(size);
         Random rnd = new Random();
         int constBase = 1000;
@@ -69,7 +99,7 @@ public static Vector getProtectedVector(Vector vector){
         if (o1.getSize() != o2.getSize()){
         throw new IncompatibleVectorSizesException("The vectors are of different sizes");}
         double newVar;
-        Vector o3 = createInstance(o1.getSize());
+        Vector o3 = createInstance(o1.getClass(), o1.getSize());
             for (int i = 0; i < o2.getSize(); i++) {
                 newVar = o1.getElement(i) + o2.getElement(i);
                 o3.setElement(i, newVar);
