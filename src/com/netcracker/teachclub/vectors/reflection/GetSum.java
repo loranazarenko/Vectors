@@ -23,8 +23,7 @@ public class GetSum {
          System.out.println("Метод не найден");
      } catch (IllegalAccessException e) {
          System.out.println("Метод недоступен");
-     } catch (
-         InvocationTargetException e) {
+     } catch (InvocationTargetException e) {
           System.out.println("При вызове возникло исключение");
       }
     } 

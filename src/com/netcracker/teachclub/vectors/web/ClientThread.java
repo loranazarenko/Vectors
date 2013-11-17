@@ -8,8 +8,8 @@ public class ClientThread extends Thread{
     public static void main(String[] args) throws EOFException, IOException{
          String f1;
          String f2;
-         f1 = "d:/A1.txt";
-         f2 = "d:/A2.txt";
+         f1 = "E:/A1.txt";
+         f2 = "E:/A2.txt";
          DataInputStream in   = null;
          DataOutputStream out = null;
          PrintWriter bw       = null;

@@ -44,7 +44,7 @@ public static Vector createInstance(Class cl, int size) {
         } catch (IllegalAccessException ex) {
           System.out.println("Метод недоступен");
         } catch (IllegalArgumentException ex) {
-            return vf.createSizeVector(size);
+            return createInstance(size);
         } catch (InvocationTargetException ex) {
             System.out.println("При вызове возникло исключение");
         }
